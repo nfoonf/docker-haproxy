@@ -5,8 +5,8 @@ ENV HAPROXY_MAJOR 1.6
 ENV HAPROXY_VERSION 1.6.2
 ENV HAPROXY_MD5 d0ebd3d123191a8136e2e5eb8aaff039
 
-RUN apk update && apk add libssl1.0 pcre lua5.3 lua5.3-dev && rm -f /var/cache/apk/* \
-  && buildDeps='curl gcc libc-dev linux-headers pcre-dev openssl-dev make tar' \
+RUN apk update && apk add libssl1.0 pcre lua5.3 && rm -f /var/cache/apk/* \
+  && buildDeps='curl gcc libc-dev linux-headers pcre-dev openssl-dev lua5.3-dev make tar' \
 	&& set -x \
 	&& apk update && apk add $buildDeps && rm -f /var/cache/apk/* \
 	&& curl -SL "http://www.haproxy.org/download/${HAPROXY_MAJOR}/src/haproxy-${HAPROXY_VERSION}.tar.gz" -o haproxy.tar.gz \
@@ -15,12 +15,10 @@ RUN apk update && apk add libssl1.0 pcre lua5.3 lua5.3-dev && rm -f /var/cache/a
 	&& tar -xzf haproxy.tar.gz -C /usr/src/haproxy --strip-components=1 \
 	&& rm haproxy.tar.gz \
 	&& make -C /usr/src/haproxy \
-    DEBUG=-ggdb \
-    CFLAGS=-O0 \
-		TARGET=linux2628 \
-    USE_LUA=yes \
-    LUA_LIB=/opt/lua53/lib/ \
-    LUA_INC=/opt/lua53/include/ \
+    TARGET=linux2628 \
+    USE_LUA=1 \
+    LUA_LIB=/usr/lua5.3/lib \
+    LUA_INC=/usr/lua5.3/include \
 		USE_PCRE=1 PCREDIR= \
 		USE_OPENSSL=1 \
 		USE_ZLIB=1 \
