@@ -31,6 +31,8 @@ RUN apk update && apk add libssl1.0 pcre lua5.3 && rm -f /var/cache/apk/* \
 	&& apk del $buildDeps
 
 # ADD ./errors /etc/haproxy/errors
-ADD ./haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+ADD ./lib/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+ADD ./lib/acme-http01-webroot.lua /etc/haproxy/acme-http01-webroot.lua
+ADD ./lib/cert-renewal.sh /usr/bin/renewssl
 
 CMD ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
