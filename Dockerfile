@@ -2,7 +2,7 @@ FROM alpine:latest
 MAINTAINER Corey Butler
 
 ENV HAPROXY_MAJOR 1.6
-ENV HAPROXY_VERSION 1.6.2
+ENV HAPROXY_VERSION 1.6.4
 ENV HAPROXY_MD5 d0ebd3d123191a8136e2e5eb8aaff039
 
 RUN apk update && apk add libssl1.0 pcre lua5.3 && rm -f /var/cache/apk/* \
