@@ -10,7 +10,7 @@ docker run --rm --name haproxy \
   -v /data/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg \
   -p 80:80 \
   -p 443:443 \
-  ecor/haproxy
+  ecor/proxy
 ```
 
 You must specify the configuration file.
@@ -23,10 +23,18 @@ docker run --rm --name haproxy \
   -v /data/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg \
   -p 80:80 \
   -p 443:443 \
-  ecor/haproxy
+  ecor/proxy
 ```
 
+**Reloading**
+
+You can soft-reload HAProxy using the following command:
+
+`docker exec -it docker-proxy haproxy reload`
+
 ## Default configuration
+
+This should be updated for your environment.
 
 ```sh
 global
@@ -38,7 +46,7 @@ global
   # Default SSL material locations
   #crt-base /etc/letsencrypt/live
 
-  #lua-load /etc/haproxy/acme-http01-webroot.lua
+  lua-load /etc/haproxy/acme-http01-webroot.lua
 
   # Default ciphers to use on SSL-enabled listening sockets.
   # For more information, see ciphers(1SSL).
@@ -65,8 +73,8 @@ frontend http
   bind *:80
 
   #redirect scheme https if !{ ssl_fc }
-  #acl acme_challenge path_beg /.well-known/acme-challenge/
-  #use_backend unencrypted
+  acl acme_challenge path_beg /.well-known/acme-challenge/
+  use_backend unencrypted
 
   default_backend not_found
 
