@@ -33,7 +33,7 @@ RUN apk update && apk add libssl1.0 pcre lua5.3 && rm -f /var/cache/apk/* \
 # ADD ./errors /etc/haproxy/errors
 ADD ./lib/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 ADD ./lib/acme-http01-webroot.lua /etc/haproxy/acme-http01-webroot.lua
-COPY entrypoint.sh /
+COPY ./lib/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
