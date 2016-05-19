@@ -35,6 +35,5 @@ ADD ./lib/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 ADD ./lib/acme-http01-webroot.lua /etc/haproxy/acme-http01-webroot.lua
 COPY ./lib/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg", "-p", "/run/haproxy.pid"]
